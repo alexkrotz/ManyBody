@@ -1,16 +1,31 @@
-# This is a sample Python script.
+import os
+import sys
+from shutil import copyfile
+import time
+import numpy as np
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import hubbard_exact
+import hubbard_scf
+from input_proc import proc_inputfile
+import dynamics
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    args = sys.argv[1:]
+    if not args:
+        print('Usage: python main.py [opts] inputfile')
+        sys.exit()
+    start_time = time.time()
+    inputfile = args[-1]
+    opt = args[0]
+    # inputfile = './inputfile'
+    sim = proc_inputfile(inputfile)
+    sim.print_simulation_info()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    if sim.e_method=='exact':
+        sim = hubbard_exact.init_hubbard_exact(sim)
+    if sim.e_method=='scf':
+        sim = hubbard_scf.init_hubbard_scf(sim)
+    sim = dynamics.run_dynamics(sim)
+
+
+

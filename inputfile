@@ -1,0 +1,7 @@
+u=1
+t=1
+Np=1
+Ns0=4
+e_method='scf'
+trials = 800
+nprocs = 8
