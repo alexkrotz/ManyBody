@@ -12,7 +12,7 @@ import dynamics
 if __name__ == '__main__':
     args = sys.argv[1:]
     if not args:
-        print('Usage: python main.py [opts] inputfile')
+        print('Usage: python main.py inputfile')
         sys.exit()
     start_time = time.time()
     inputfile = args[-1]
